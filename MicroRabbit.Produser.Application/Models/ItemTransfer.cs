@@ -2,8 +2,10 @@
 {
     public class ItemTransfer
     {
-        public int Id { get; set; }
+        public int ItemId { get; set; }
         public string Name { get; set; }
-        public int UserId { get; set; } 
+        public bool? IsDeleted { get; set; }
+        public DateTime? DeletedTime { get; set; }
+        public int UserId { get; set; }
     }
 }

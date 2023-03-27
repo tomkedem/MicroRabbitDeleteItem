@@ -18,9 +18,11 @@ namespace MicroRabbit.Produser.Application.Services
         public void Transfer(ItemTransfer accountTransfer)
         {
             var createTransferCommand = new CreateTransferCommand(
-                    accountTransfer.Id,
+                    accountTransfer.ItemId,
                     accountTransfer.Name,
                     accountTransfer.UserId
+
+
                 );
 
             _bus.SendCommand(createTransferCommand);

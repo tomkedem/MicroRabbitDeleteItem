@@ -32,13 +32,25 @@ namespace MicroRabbit.Infra.Bus
         }
         public void Publish<T>(T @event) where T : Event
         {
+           
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using(var connection = factory.CreateConnection()) 
             using(var channel = connection.CreateModel()) 
             {
-                var eventName = @event.GetType().Name;
 
-                channel.QueueDeclare(eventName, false, false, false, null);
+                var eventName = @event.GetType().Name + " TomerKedem";
+              
+                var arguments = new Dictionary<string, object>()
+                {
+                    { "max-length", 1000 },
+                    { "message-ttl", 3600000 }
+                };
+                var policy = new Dictionary<string, object>()
+                {
+                    { "max-length", 1000 },
+                    { "message-ttl", 3600000 }
+                };
+                channel.QueueDeclare(eventName, durable: false, exclusive: false, autoDelete: false, arguments: policy);
 
                 var message = JsonConvert.SerializeObject(@event);
 
